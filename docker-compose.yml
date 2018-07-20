@@ -1,0 +1,65 @@
+version: "3.6"
+services:
+  db:
+    image: mongo:latest
+    # コンテナのデータをボリュームとしてホストOSにマウント
+    volumes:
+      # MongoDBのデータをマウント
+      - ../rocket.chat_db/runtime/db:/data/db
+      # MongoDBのdumpファイルをマウント
+      - ../rocket.chat_db/dump:/dump
+    # MongoDBのjournalファイルをsmallfilesとする
+    command: mongod --smallfiles
+    restart: always
+
+  rocketchat:
+    # image: rocket.chat:latest
+    image: rocket.chat:0.66.3
+    # image: rocketchat/rocket.chat:0.66.2
+    # image: himmel17/rocket.chat:0.66.2
+    # build: .
+    # volumes:
+    #   - ../rocket.chat_db/home_body:/tmp/home_body
+    # 環境変数を設定
+    environment:
+      # MongoDB(db)のURLを指定
+      - MONGO_URL=mongodb://db:27017/rocketchat
+      # RocketChatのURL(ここではホスト名をlocalhostとしている)
+      - ROOT_URL=http://localhost
+      # アカウントのメールアドレスのドメインチェックを無効化
+      - Accounts_UseDNSDomainCheck=false
+    # MongoDB(db)へのリンクを指定．起動順もこれで制御されるのでdepends_onは不要
+    links:
+      - db:db
+    # dbがreadyになるまで待ってからRocket Chatを開始
+    # command:
+    #   - node
+    #   - main.js
+    # command: "./wait-for-it.sh db:27017 && node main.js"
+    # command: ["node", "main.js"]
+    # command: ["sleep", "5", "&&", "node", "main.js"]
+    # RocketChatのポートを設定
+    ports:
+      - 3000:3000
+    restart: always
+
+  # hubot:
+  #   # image: rocketchat/hubot-rocketchat:latest
+  #   image: himmel17/hubot-rocketchat:latest # こちらでhubot-rss-reader追加した
+  #   volumes:
+  #     - ../rocket.chat_db/hubot:/home/hubot/scripts
+  #   links:
+  #     - rocketchat:rocketchat
+  #   environment:
+  #     - ROCKETCHAT_URL=rocketchat:3000
+  #     # - ROCKETCHAT_URL=43.30.154.37:3000
+  #     - ROCKETCHAT_ROOM=general
+  #     - ROCKETCHAT_USER=bot
+  #     - ROCKETCHAT_PASSWORD=botpassword
+  #     - BOT_NAME=bot
+  #     # - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics,hubot-rss-reader
+  #     # - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics
+  #   # for hubot-jenkins-notifier
+  #   # ports:
+  #   #   - 3001:8080
+  #   restart: always
