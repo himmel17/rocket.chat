@@ -57,7 +57,7 @@ services:
   #     - ROCKETCHAT_USER=bot
   #     - ROCKETCHAT_PASSWORD=botpassword
   #     - BOT_NAME=bot
-  #     # - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics,hubot-rss-reader
+  #     # - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics,hubot-mongodb-brain,hubot-rss-reader
   #     # - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics
   #   # for hubot-jenkins-notifier
   #   # ports:
