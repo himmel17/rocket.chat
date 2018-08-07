@@ -28,6 +28,8 @@ services:
       - ROOT_URL=http://localhost
       # アカウントのメールアドレスのドメインチェックを無効化
       - Accounts_UseDNSDomainCheck=false
+      - HTTP_PROXY=http://proxy.atg.sony.co.jp:10080
+      - HTTPS_PROXY=https://proxy.atg.sony.co.jp:10080
     # MongoDB(db)へのリンクを指定．起動順もこれで制御されるのでdepends_onは不要
     links:
       - db:db
@@ -57,6 +59,8 @@ services:
   #     - ROCKETCHAT_USER=bot
   #     - ROCKETCHAT_PASSWORD=botpassword
   #     - BOT_NAME=bot
+  #     - HTTP_PROXY=http://proxy.atg.sony.co.jp:10080
+  #     - HTTPS_PROXY=https://proxy.atg.sony.co.jp:10080
   #     # - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics,hubot-mongodb-brain,hubot-rss-reader
   #     # - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics
   #   # for hubot-jenkins-notifier
