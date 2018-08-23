@@ -2,6 +2,7 @@ version: "3.6"
 services:
   db:
     image: mongo:latest
+    # build: ./mongo
     # コンテナのデータをボリュームとしてホストOSにマウント
     volumes:
       # MongoDBのデータをマウント
@@ -13,10 +14,9 @@ services:
     restart: always
 
   rocketchat:
-    # image: rocket.chat:latest
-    image: rocket.chat:0.66.3
-    # image: rocketchat/rocket.chat:0.66.2
-    # image: himmel17/rocket.chat:0.66.2
+    # image: rocket.chat:0.66.3
+    image: rocket.chat:0.68.4
+    # build: ./rocket.chat
     # build: .
     # volumes:
     #   - ../rocket.chat_db/home_body:/tmp/home_body
@@ -48,8 +48,9 @@ services:
   # hubot:
   #   # image: rocketchat/hubot-rocketchat:latest
   #   image: himmel17/hubot-rocketchat:latest # こちらでhubot-rss-reader追加した
-  #   volumes:
-  #     - ../rocket.chat_db/hubot:/home/hubot/scripts
+  #   # build: ./hubot-rocketchat
+  #   # volumes:
+  #   #   - ../rocket.chat_db/hubot:/home/hubot/scripts
   #   links:
   #     - rocketchat:rocketchat
   #   environment:
@@ -59,8 +60,8 @@ services:
   #     - ROCKETCHAT_USER=bot
   #     - ROCKETCHAT_PASSWORD=botpassword
   #     - BOT_NAME=bot
-  #     - HTTP_PROXY=http://proxy.atg.sony.co.jp:10080
-  #     - HTTPS_PROXY=https://proxy.atg.sony.co.jp:10080
+  #     # - HTTP_PROXY=http://proxy.atg.sony.co.jp:10080
+  #     # - HTTPS_PROXY=https://proxy.atg.sony.co.jp:10080
   #     # - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics,hubot-mongodb-brain,hubot-rss-reader
   #     # - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics
   #   # for hubot-jenkins-notifier
